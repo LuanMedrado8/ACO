@@ -54,14 +54,11 @@ class FormigasColonia:
         return (feromonio ** alfa) * (heuristica ** beta)
 
     def escolher_proxima_cidade(self, cidade_atual, cidades_disponiveis):
-        probabilidades = [self.calcula_probabilidade(cidade_atual, cidade) for cidade in cidades_disponiveis]
-    
-    # Substitua NaNs ou infinitos por zeros
+        probabilidades = [self.calcula_probabilidade(cidade_atual, cidade) for cidade in cidades_disponiveis]    
         probabilidades = [0 if not np.isfinite(p) else p for p in probabilidades]
     
-    # Verifique se todas as probabilidades são zero (caso não haja uma cidade válida para escolher)
         if sum(probabilidades) == 0:
-            probabilidades = [1 for _ in cidades_disponiveis]  # Distribui uniformemente
+            probabilidades = [1 for _ in cidades_disponiveis]  
     
         return random.choices(cidades_disponiveis, weights=probabilidades)[0]
 
