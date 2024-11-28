@@ -15,14 +15,16 @@ class FormigasColonia:
         self.n_formigas = n_formigas
         self.n_iteracoes = n_iteracoes
         self.evaporation = evaporacao
-        self.alpha = alpha  #feromonios
-        self.beta = beta  #heuristica (diferença de valores)
+        self.alpha = alpha 
+        self.beta = beta  
 
         self.feromonio = np.ones((len(cidades), len(cidades)))
         self.heuristica = self.calcula_heuristica()
+        #print(self.heuristica)
 
     def calcula_heuristica(self):
         heuristica = np.zeros((len(self.cidades), len(self.cidades)))
+        #print(heuristica)
         produto = 'GASOLINA'
 
         for i, cidade1 in enumerate(self.cidades):
@@ -34,10 +36,12 @@ class FormigasColonia:
                     compra_c2 = self.dados[(self.dados['Municipio'] == cidade2) & 
                                            (self.dados['Produto'] == produto)]['Valor de Compra'].mean()
                     
-                    print(f"Venda de {cidade1}: {venda_c1:.2f}, Compra de {cidade2}: {compra_c2:.2f}")  # Adicionando print para ver as variáveis
+                    print(f"Venda de {cidade1}: {venda_c1:.2f}, Compra de {cidade2}: {compra_c2:.2f}") 
                     
                     # Calcula a heurística como a diferença de venda e compra
                     heuristica[i][j] = max(venda_c1 - compra_c2, 0)
+                    print(f"Heurística de {cidade1} para {cidade2}: {heuristica[i][j]:.2f}")  
+                   
         return heuristica
     
     def calcula_probabilidade(self, cidade_atual, cidade_destino):
